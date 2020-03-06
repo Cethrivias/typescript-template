@@ -1,0 +1,65 @@
+{
+  "name": "typescript-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist",
+    "test": "TS_NODE_FILES=true mocha -r ts-node/register -r source-map-support/register 'src/test/unit/**/*.test.ts' --exit",
+    "unit": "TS_NODE_FILES=true mocha -r ts-node/register -r source-map-support/register 'src/test/unit/**/*.test.ts' --exit",
+    "integ": "TS_NODE_FILES=true mocha -r ts-node/register -r source-map-support/register 'src/test/integ/**/*.test.ts' --exit",
+    "coverage": "TS_NODE_FILES=true nyc mocha 'src/test/unit/**/*.test.ts' --exit",
+    "report": "nyc report --reporter=text --reporter=html",
+    "prewatch": "rm -rf dist",
+    "watch": "tsc --watch",
+    "prebuild": "rm -rf dist",
+    "build": "tsc",
+    "lint": "tslint --project . --fix"
+  },
+  "keywords": [],
+  "author": "Cherednichenko Nikita",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.2.7",
+    "@types/config": "0.0.36",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^12.12.24",
+    "chai": "^4.2.0",
+    "husky": "^4.0.10",
+    "mocha": "^7.0.0",
+    "nyc": "^15.0.0",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "source-map-support": "^0.5.16",
+    "ts-node": "^8.6.2",
+    "tslint": "^6.0.0",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "config": "^3.2.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && pretty-quick --staged",
+      "post-commit": "git update-index -g"
+    }
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "src/test"
+    ],
+    "include": [
+      "src"
+    ],
+    "require": [
+      "ts-node/register",
+      "source-map-support/register"
+    ],
+    "all": true
+  }
+}
